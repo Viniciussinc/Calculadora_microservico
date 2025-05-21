@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora Usando Microserviços</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(120deg, #1a1a1a, #2e2e2e);
+      margin: 0;
+      padding: 0;
+      color: #f1f1f1;
+    }
+
+    .container {
+      max-width: 420px;
+      margin: 60px auto;
+      background: #121212;
+      padding: 32px 24px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0, 204, 255, 0.15);
+      border: 1px solid #2d2d2d;
+    }
+
+    h2 {
+      text-align: center;
+      color: #00ccff;
+      margin-bottom: 24px;
+      font-size: 30px;
+    }
+
+    label {
+      display: block;
+      margin-top: 16px;
+      color: #bbb;
+      font-weight: 500;
+    }
+
+    input,
+    select {
+      width: 95%;
+      padding: 10px;
+      margin-top: 6px;
+      border-radius: 6px;
+      border: 1px solid #444;
+      background: #1e1e1e;
+      color: #f1f1f1;
+      font-size: 15px;
+    }
+
+    select{
+      width: 100%;
+    }
+
+    /* Remove setas no Chrome, Safari, Edge */
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    /* Remove setas no Firefox */
+    input[type=number] {
+      appearance: textfield;
+      -moz-appearance: textfield;
+    }
+
+    button {
+      margin-top: 28px;
+      width: 100%;
+      padding: 12px;
+      background: #00ccff;
+      color: #000;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #00aacc;
+    }
+
+    .result, .error {
+      margin-top: 24px;
+      text-align: center;
+      font-size: 18px;
+    }
+
+    .result {
+      color: #00ff88;
+    }
+
+    .error {
+      color: #ff4d4d;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Calculadora de Microserviços</h2>
+    <form id="calcForm">
+      <label for="operation">Operação:</label>
+      <select id="operation" name="operation">
+        <option value="soma">Soma</option>
+        <option value="subtracao">Subtração</option>
+        <option value="multiplicacao">Multiplicação</option>
+        <option value="divisao">Divisão</option>
+      </select>
+      <label for="a">Valor A:</label>
+      <input type="number" id="a" name="a" required>
+      <label for="b">Valor B:</label>
+      <input type="number" id="b" name="b">
+      <button type="submit">Calcular</button>
+    </form>
+    <div class="result" id="result"></div>
+    <div class="error" id="error"></div>
+  </div>
+  <script>
+    const form = document.getElementById('calcForm');
+    const resultDiv = document.getElementById('result');
+    const errorDiv = document.getElementById('error');
+    const bInput = document.getElementById('b');
+    const operationSelect = document.getElementById('operation');
+
+    form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    resultDiv.textContent = '';
+    errorDiv.textContent = '';
+    const operation = operationSelect.value;
+    
+    const a = parseFloat(document.getElementById('a').value);
+    const b = parseFloat(bInput.value);
+
+    try {
+
+      // Verificando qual é a operação e fazendo a requisição
+      // Aqui você deve substituir `urlDaAplicação` pela URL correta do seu microserviço
+      // Exemplo: `https://calculadora-microservicos.vercel.app/api/ArquivoOperacao/`
+      // Dentro da pasta API você deve criar um arquivo para cada operação
+      // Exemplo: soma.js, subtracao.js, multiplicacao.js e divisao.js
+      // Cada arquivo deve exportar uma função que recebe os parâmetros e retorna o resultado
+      let response;
+      if (operation === "soma"){
+        response = await fetch(`/api/soma/`, {
+          method: 'POST',
+          body: JSON.stringify({ a, b }),
+          headers: { 'Content-Type': 'application/json' }
+        });
+      }else if (operation === "subtracao"){
+        response = await fetch(`https://microserviso-calculadora-operacao-subtracao.vercel.app/api/subtracao`, {
+          method: 'POST',
+          body: JSON.stringify({ a, b }),
+          headers: { 'Content-Type': 'application/json' }
+        });
+      }else if (operation === "multiplicacao"){
+        response = await fetch(`https://microserviso-calculadora-operacao-multiplicacao.vercel.app/api/multiplicacao`, {
+          method: 'POST',
+          body: JSON.stringify({ a, b }),
+          headers: { 'Content-Type': 'application/json' }
+        });
+      }else if (operation === "divisao"){
+        response = await fetch(`/api/divisao/`, {
+          method: 'POST',
+          body: JSON.stringify({ a, b }),
+          headers: { 'Content-Type': 'application/json' }
+        });
+      }
+
+      // Exivbindo o resultado
+      const data = await response.json();
+      if (response.ok) {
+        resultDiv.textContent = 'Resultado: ' + (data.result ?? JSON.stringify(data));
+      } else {
+        errorDiv.textContent = data.error || 'Erro ao calcular.';
+      }
+    } catch (err) {
+      errorDiv.textContent = 'Erro de conexão com o servidor.';
+    }
+  });
+
+  </script>
+</body>
+</html>
