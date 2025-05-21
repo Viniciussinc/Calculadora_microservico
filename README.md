@@ -29,32 +29,6 @@ npm install
 npm start
 ```
 
-## Estrutura do projeto
-A estrutura do projeto é a seguinte:
-```
-calculadora-microservicos
-├── api
-│   ├── divisao.js
-│   ├── multiplicacao.js
-│   ├── soma.js
-│   └── subtracao.js
-├── public
-│   ├── css
-│   │   └── style.css
-│   └── js
-│       └── script.js
-├── views
-│   ├── divisao.ejs
-│   ├── index.ejs
-│   ├── multiplicacao.ejs
-│   ├── soma.ejs
-│   └── subtracao.ejs
-├── .gitignore
-├── app.js
-├── package.json
-└── README.md
-```
-
 ## Tecnologias utilizadas
 * Node.js
 * Express
