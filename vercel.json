@@ -1,6 +1,10 @@
 {
   "version": 2,
   "routes": [
-    { "src": "/(.*)", "dest": "/api/index.js" }
+    { "handle": "filesystem" },
+    { "src": "/api/soma", "dest": "/api/soma.js" },
+    { "src": "/api/subtracao", "dest": "/api/subtracao.js" },
+    { "src": "/api/multiplicacao", "dest": "/api/multiplicacao.js" },
+    { "src": "/api/divisao", "dest": "/api/divisao.js" }
   ]
 }

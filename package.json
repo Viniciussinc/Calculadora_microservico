@@ -1,0 +1,22 @@
+{
+  "name": "calculadora-microservicos",
+  "version": "1.0.0",
+  "description": "Uma calculadora distribuída com arquitetura de microserviços",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vercel ",
+    "deploy": "vercel deploy --prod"
+  },
+  "keywords": [
+    "microservices",
+    "calculator",
+    "vercel",
+    "serverless"
+  ],
+  "author": "Vinicius Araujo",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "vercel": "^30.2.3"
+  }
+}

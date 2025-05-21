@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calculadora Usando Microserviços</title>
+  <title>Calculadora de Microserviços </title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(120deg, #1a1a1a, #2e2e2e);
+      background: linear-gradient(135deg, #2c3e50, #1a1a2e);
       margin: 0;
       padding: 0;
       color: #f1f1f1;
@@ -16,18 +16,28 @@
     .container {
       max-width: 420px;
       margin: 60px auto;
-      background: #121212;
+      background: #18191c;
       padding: 32px 24px;
-      border-radius: 12px;
-      box-shadow: 0 0 15px rgba(0, 204, 255, 0.15);
-      border: 1px solid #2d2d2d;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      border: 1px solid #333;
     }
 
     h2 {
       text-align: center;
-      color: #00ccff;
+      color: #4cd7f6;
       margin-bottom: 24px;
-      font-size: 30px;
+      font-size: 28px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .author {
+      text-align: center;
+      font-size: 14px;
+      color: #aaa;
+      margin-top: -15px;
+      margin-bottom: 20px;
     }
 
     label {
@@ -40,13 +50,21 @@
     input,
     select {
       width: 95%;
-      padding: 10px;
+      padding: 12px;
       margin-top: 6px;
-      border-radius: 6px;
+      border-radius: 8px;
       border: 1px solid #444;
-      background: #1e1e1e;
+      background: #242529;
       color: #f1f1f1;
       font-size: 15px;
+      transition: all 0.3s ease;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: #4cd7f6;
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(76, 215, 246, 0.2);
     }
 
     select{
@@ -69,55 +87,76 @@
     button {
       margin-top: 28px;
       width: 100%;
-      padding: 12px;
-      background: #00ccff;
-      color: #000;
+      padding: 14px;
+      background: linear-gradient(to right, #4cd7f6, #32a7ff);
+      color: #fff;
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
       font-size: 16px;
       font-weight: bold;
       cursor: pointer;
-      transition: background 0.3s ease;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
 
     button:hover {
-      background: #00aacc;
+      background: linear-gradient(to right, #32a7ff, #4cd7f6);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(76, 215, 246, 0.3);
     }
 
     .result, .error {
       margin-top: 24px;
       text-align: center;
       font-size: 18px;
+      padding: 12px;
+      border-radius: 8px;
     }
 
     .result {
-      color: #00ff88;
+      color: #2ecc71;
+      background-color: rgba(46, 204, 113, 0.1);
+      border: 1px solid rgba(46, 204, 113, 0.3);
     }
 
     .error {
       color: #ff4d4d;
+      background-color: rgba(255, 77, 77, 0.1);
+      border: 1px solid rgba(255, 77, 77, 0.3);
+    }
+    
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      color: #666;
+      font-size: 12px;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2>Calculadora de Microserviços</h2>
+    <h2>MicroCalculadora</h2>
+    <div class="author">Desenvolvido por Vinicius Araujo ,Thiago Cunha, Paulo Ricardo e Otavio Colimo</div>
     <form id="calcForm">
-      <label for="operation">Operação:</label>
+      <label for="operation">Escolha a operação:</label>
       <select id="operation" name="operation">
-        <option value="soma">Soma</option>
-        <option value="subtracao">Subtração</option>
-        <option value="multiplicacao">Multiplicação</option>
-        <option value="divisao">Divisão</option>
+        <option value="soma">Adição (+)</option>
+        <option value="subtracao">Subtração (-)</option>
+        <option value="multiplicacao">Multiplicação (×)</option>
+        <option value="divisao">Divisão (÷)</option>
       </select>
-      <label for="a">Valor A:</label>
-      <input type="number" id="a" name="a" required>
-      <label for="b">Valor B:</label>
-      <input type="number" id="b" name="b">
-      <button type="submit">Calcular</button>
+      <label for="a">Primeiro número:</label>
+      <input type="number" id="a" name="a" placeholder="Digite o primeiro valor" required>
+      <label for="b">Segundo número:</label>
+      <input type="number" id="b" name="b" placeholder="Digite o segundo valor" required>
+      <button type="submit">Calcular resultado</button>
     </form>
-    <div class="result" id="result"></div>
-    <div class="error" id="error"></div>
+    <div class="result" id="result" style="display: none;"></div>
+    <div class="error" id="error" style="display: none;"></div>
+    <div class="footer">
+      Arquitetura de Microserviços - 2025
+    </div>
   </div>
   <script>
     const form = document.getElementById('calcForm');
@@ -129,20 +168,16 @@
     form.addEventListener('submit', async (e) => {
     e.preventDefault();
     resultDiv.textContent = '';
+    resultDiv.style.display = 'none';
     errorDiv.textContent = '';
+    errorDiv.style.display = 'none';
     const operation = operationSelect.value;
     
     const a = parseFloat(document.getElementById('a').value);
     const b = parseFloat(bInput.value);
 
     try {
-
       // Verificando qual é a operação e fazendo a requisição
-      // Aqui você deve substituir `urlDaAplicação` pela URL correta do seu microserviço
-      // Exemplo: `https://calculadora-microservicos.vercel.app/api/ArquivoOperacao/`
-      // Dentro da pasta API você deve criar um arquivo para cada operação
-      // Exemplo: soma.js, subtracao.js, multiplicacao.js e divisao.js
-      // Cada arquivo deve exportar uma função que recebe os parâmetros e retorna o resultado
       let response;
       if (operation === "soma"){
         response = await fetch(`/api/soma/`, {
@@ -170,15 +205,18 @@
         });
       }
 
-      // Exivbindo o resultado
+      // Exibindo o resultado
       const data = await response.json();
       if (response.ok) {
         resultDiv.textContent = 'Resultado: ' + (data.result ?? JSON.stringify(data));
+        resultDiv.style.display = 'block';
       } else {
         errorDiv.textContent = data.error || 'Erro ao calcular.';
+        errorDiv.style.display = 'block';
       }
     } catch (err) {
       errorDiv.textContent = 'Erro de conexão com o servidor.';
+      errorDiv.style.display = 'block';
     }
   });
 
