@@ -68,13 +68,3 @@ calculadora-microservicos
 * [Thiago Cunha](https://github.com/thiagocunha)
 * [Vinicius de Araujo](https://github.com/viniciusdearaujo)
 
-## Licença
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
-
-=======
-* Soma (https://calculadora-microservicos.vercel.app/api/soma) - Thiago Cunha
-* Subtração (https://calculadora-microservicos.vercel.app/api/subtracao) - Otávio Colimo
-* Muliplicação (https://calculadora-microservicos.vercel.app/api/multiplicacao) - Paulo Ricardo
-* Divisão (https://calculadora-microservicos.vercel.app/api/divisao) - Vinicius de Araujo Silva
-* [Aplicação Final](https://calculadora-microservicos.vercel.app/)
-
