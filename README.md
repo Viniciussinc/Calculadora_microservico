@@ -79,4 +79,4 @@ Para mais informações, entre em contato pelo e-mail contato@calculadora-micros
 * Muliplicação (https://calculadora-microservicos.vercel.app/api/multiplicacao) - Paulo Ricardo
 * Divisão (https://calculadora-microservicos.vercel.app/api/divisao) - Vinicius de Araujo Silva
 * [Aplicação Final](https://calculadora-microservicos.vercel.app/)
->>>>>>> 254ae86e3ad4d07703e47317a1aaaae5a545015a
+
