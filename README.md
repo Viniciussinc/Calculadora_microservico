@@ -1,5 +1,5 @@
 # Calculadora em Microserviços
-Testando microserviços com uma aplicação simples de calculadora, onde cada operação de cálculo, a princípio, ficaria em uma hospedagem diferente, com a requisção doscalculos sendo realizado por um servidor central, que buscaria os dados em outros servidores.
+Esta aplicação demonstra a arquitetura de microserviços através de uma calculadora web. O design implementa cada operação matemática (soma, subtração, multiplicação e divisão) como serviços independentes hospedados em endpoints distintos. Um servidor central coordena as interações, recebendo solicitações do usuário e direcionando-as para o microserviço apropriado conforme a operação escolhida. Essa abordagem modular permite desenvolvimento, implantação e escalabilidade independentes de cada componente funcional da calculadora.
 
 ## Rotas para as operações
 * Soma (https://calculadora-microservicos.vercel.app/api/soma) - Thiago Cunha
